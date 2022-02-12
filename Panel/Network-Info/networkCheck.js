@@ -28,7 +28,7 @@ const carrierNames = loadCarrierNames();
 if (!v4.primaryAddress && !v6.primaryAddress) {
   $done({
     title: '沒有網路',
-    content: '尚未連接網際網路\n請檢查網際網路狀態後重試',
+    content: '無法使用網際網路\n請檢查網際網路連線後重試',
     icon: 'wifi.exclamationmark',
     'icon-color': '#CB1B45',
   });
@@ -39,14 +39,14 @@ if (!v4.primaryAddress && !v6.primaryAddress) {
     if (carrierId && radio) {
       cellularInfo = carrierNames[carrierId] ?
         carrierNames[carrierId] + ' | ' + radioGeneration[radio] + ' - ' + radio :
-        '行動數據 | ' + radioGeneration[radio] + ' - ' + radio;
+        '行動網路 | ' + radioGeneration[radio] + ' - ' + radio;
     }
   }
   $httpClient.get('http://ip-api.com/json', function (error, response, data) {
     if (error) {
       $done({
         title: '發生錯誤',
-        content: '無法獲得目前網路資訊\n請檢查網際網路狀態後重試',
+        content: '無法取得目前網路資訊\n請檢查網際網路狀態後重試',
         icon: 'wifi.exclamationmark',
         'icon-color': '#CB1B45',
       });
@@ -60,9 +60,9 @@ if (!v4.primaryAddress && !v6.primaryAddress) {
         (v6.primaryAddress ? `IPv6 : ${v6.primaryAddress}\n` : '') +
         (v4.primaryRouter && wifi.ssid ? `Router IPv4 : ${v4.primaryRouter}\n` : '') +
         (v6.primaryRouter && wifi.ssid ? `Router IPv6 : ${v6.primaryRouter}\n` : '') +
-        `節點 IP : ${info.query}\n` +
-        `節點 ISP : ${info.isp}\n` +
-        `節點位置 : ${getFlagEmoji(info.countryCode)} | ${info.country} - ${info.city
+        `IP 位置: ${info.query}\n` +
+        `ISP 業者: ${info.isp}\n` +
+        `國家 : ${getFlagEmoji(info.countryCode)} | ${info.country} - ${info.city
         }`,
       icon: wifi.ssid ? 'wifi' : 'simcard',
       'icon-color': wifi.ssid ? '#005CAF' : '#F9BF45',
@@ -84,7 +84,7 @@ function loadCarrierNames() {
     //台灣電信業者 Taiwan
     '466-11': '中華電信', '466-92': '中華電信',
     '466-01': '遠傳電信', '466-03': '遠傳電信',
-    '466-97': '台灣大哥大', '466-89': '台灣之星', '466-05': 'GT',
+    '466-97': '台灣大哥大', '466-89': '台灣之星', '466-05': '亞太電信',
     //中國電信業者 China
     '460-03': '中国电信', '460-05': '中国电信', '460-11': '中国电信',
     '460-01': '中国联通', '460-06': '中国联通', '460-09': '中国联通',
